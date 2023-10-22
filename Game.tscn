@@ -1,8 +1,127 @@
-[gd_scene load_steps=23 format=3 uid="uid://bycl6a1ctwe77"]
+[gd_scene load_steps=42 format=3 uid="uid://bycl6a1ctwe77"]
 
-[ext_resource type="Texture2D" uid="uid://b6sx3cvavebhp" path="res://icon.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b4ikd62yul1i7" path="res://icon.png" id="1"]
 [ext_resource type="Script" path="res://Player/StateMachine.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://jjhiymai33ke" path="res://Assets/player.png" id="2_s1nev"]
 [ext_resource type="Script" path="res://Player/Player.gd" id="3"]
+[ext_resource type="Script" path="res://Player/Idle.gd" id="4_70j7j"]
+[ext_resource type="Script" path="res://Player/Moving.gd" id="5_02okd"]
+[ext_resource type="Script" path="res://Player/Jumping.gd" id="6_bu4b7"]
+[ext_resource type="Script" path="res://Player/Falling.gd" id="7_7xqwx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82bmk"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(224, 70, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7oog"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(256, 70, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uch1y"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(288, 70, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7grq"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(0, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0htw"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(224, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jflgv"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(256, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ubi0"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(288, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1inr1"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(32, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exgn1"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(64, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2v17g"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(96, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4ed6"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(128, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3opyn"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(160, 0, 32, 70)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3ehw"]
+atlas = ExtResource("2_s1nev")
+region = Rect2(192, 0, 32, 70)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yx7j6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82bmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7oog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uch1y")
+}],
+"loop": false,
+"name": &"Falling",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7grq")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0htw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jflgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ubi0")
+}],
+"loop": false,
+"name": &"Jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1inr1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exgn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2v17g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4ed6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3opyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3ehw")
+}],
+"loop": true,
+"name": &"Moving",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(16, 49)
@@ -150,7 +269,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-animation = &"Falling"
+sprite_frames = SubResource("SpriteFrames_yx7j6")
+animation = &"Idle"
+autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0, 3.5)
@@ -160,12 +281,16 @@ shape = SubResource("1")
 script = ExtResource("2")
 
 [node name="Idle" type="Node" parent="Player/StateMachine"]
+script = ExtResource("4_70j7j")
 
 [node name="Moving" type="Node" parent="Player/StateMachine"]
+script = ExtResource("5_02okd")
 
 [node name="Jumping" type="Node" parent="Player/StateMachine"]
+script = ExtResource("6_bu4b7")
 
 [node name="Falling" type="Node" parent="Player/StateMachine"]
+script = ExtResource("7_7xqwx")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = 0
